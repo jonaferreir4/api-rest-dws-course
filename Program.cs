@@ -9,14 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddDbContext<AppDBContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseInMemoryDatabase("supermarket-api-in-memory");
 });
 
 // Correção dos nomes das interfaces:
-builder.Services.AddScoped<ICategoryRespository, CategoryRespository>();
-builder.Services.AddScoped<ICatogoryService, CategoryService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // Swagger (opcional):
 builder.Services.AddEndpointsApiExplorer();
@@ -31,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseRouting(); // Adicionado!
 app.UseAuthorization();
 app.MapControllers();

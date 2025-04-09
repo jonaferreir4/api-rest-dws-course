@@ -1,14 +1,13 @@
-
 using api_rest.Domain.Models;
 using api_rest.Domain.Repositories;
 using api_rest.Domain.Services;
 
 namespace api_rest.Services;
-public class CategoryService : ICatogoryService
+public class CategoryService : ICategoryService
 {
-    private readonly ICategoryRespository _categoryRespository;
+    private readonly ICategoryRepository _categoryRespository;
 
-    public CategoryService(ICategoryRespository categoryRespository)
+    public CategoryService(ICategoryRepository categoryRespository)
     {
         _categoryRespository = categoryRespository;
     }
