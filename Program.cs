@@ -1,9 +1,24 @@
+using api_rest.Domain.Repositories;
+using api_rest.Domain.Services;
+using api_rest.Persistence.Context;
+using api_rest.Persistence.Repositories;
+using api_rest.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddDbContext<AppDBContext>(options =>
+{
+    options.UseInMemoryDatabase("supermarket-api-in-memory");
+});
+
+// Correção dos nomes das interfaces:
+builder.Services.AddScoped<ICategoryRespository, CategoryRespository>();
+builder.Services.AddScoped<ICatogoryService, CategoryService>();
+
+// Swagger (opcional):
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -17,9 +32,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseRouting(); // Adicionado!
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
