@@ -33,8 +33,11 @@ namespace api_rest.Controllers;
                if(!result.Success)
                   return BadRequest(result.Message);
 
+               if (result.Category == null)
+                   return BadRequest("Category data is null.");
+
                var categoryResource = result.Category.ToResource();
-                return Ok(categoryResource);
+               return Ok(categoryResource);
 
        }
     }

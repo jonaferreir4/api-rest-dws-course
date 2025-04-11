@@ -6,7 +6,12 @@ namespace api_rest.Extensions;
     {
         public static List<string> GetErrorMessages( this ModelStateDictionary dictionary)
         {
-           return [.. dictionary.SelectMany(m => m.Value.Errors).Select(m => m.ErrorMessage)];
+           return dictionary
+               .Where(m => m.Value?.Errors != null)
+               .SelectMany(m => m.Value?.Errors ?? Enumerable.Empty<ModelError>())
+               .Where(e => !string.IsNullOrEmpty(e.ErrorMessage))
+               .Select(e => e.ErrorMessage)
+               .ToList();
         }
 
     }

@@ -3,9 +3,9 @@ using api_rest.Domain.Models;
 
 namespace api_rest.Communication;
 
-    public class SaveCategoryResponse(bool success, string message, Category category) : BaseResponse(success, message)
+    public class SaveCategoryResponse(bool success, string message, Category? category) : BaseResponse(success, message)
     {
-        public Category Category { get; private set; } = category;
+        public Category? Category { get; private set; } = category;
 
 
         /// <summary>
