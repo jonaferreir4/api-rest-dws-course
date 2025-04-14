@@ -11,8 +11,7 @@ namespace api_rest.Controllers;
     {
        private readonly ICategoryService _categoryService = categoryService;
 
-    [HttpGet]
-       [Route("GetAll")]
+      [HttpGet]
        public async Task<IActionResult> GetAllAsync()
        {
             var categories = await _categoryService.GetAllAsync();
@@ -40,4 +39,50 @@ namespace api_rest.Controllers;
                return Ok(categoryResource);
 
        }
+
+
+       [HttpPut("{id}")]
+       public async Task<IActionResult> PutAsync(int id, [FromBody] SaveCategoryResource resource)
+       {
+               if (!ModelState.IsValid)
+                   return BadRequest(ModelState.GetErrorMessages());
+
+               var category = resource.ToModel();
+               var result = await _categoryService.UpdateAsync(id, category);
+
+               if (!result.Success)
+                   return BadRequest(result.Message);
+
+               if (result.Category == null)
+                   return BadRequest("Category data is null.");
+
+               var categoryResource = result.Category.ToResource();
+               return Ok(categoryResource);
+       }
+
+       [HttpDelete("{id}")]
+         public async Task<IActionResult> DeleteAsync(int id)
+         {
+                  var result = await _categoryService.DeleteAsync(id);
+   
+                  if (!result.Success)
+                     return BadRequest(result.Message);
+   
+                  return Ok(result.Category);
+         }
+         
+         [HttpGet("{id}")]
+            public async Task<IActionResult> GetByIdAsync(int id)
+            {
+                var result = await _categoryService.GetByIdAsync(id);
+    
+                if (!result.Success)
+                    return BadRequest(result.Message);
+    
+                if (result.Category == null)
+                    return BadRequest("Category data is null.");
+    
+                var categoryResource = result.Category.ToResource();
+                return Ok(categoryResource);
+            }
     }

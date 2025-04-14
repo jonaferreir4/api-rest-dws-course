@@ -11,9 +11,42 @@ public class CategoryService(
 {
     private readonly ICategoryRepository _categoryRespository = categoryRespository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
+
+    public async Task<SaveCategoryResponse> DeleteAsync(int id)
+    {
+        var category =  await _categoryRespository.FindByIdAsync(id);
+        if (category == null)
+            return new SaveCategoryResponse("Category not found.");
+        try {
+
+            await _categoryRespository.RemoveAsync(category);
+            await _unitOfWork.CompleteAsync();
+
+            return new SaveCategoryResponse(category);
+        } catch(Exception ex)
+        {
+            // Do some logging stuff
+            return new SaveCategoryResponse($"An error occurred when deleting the category: {ex.Message}");
+        }
+    }
+
     public async Task<IEnumerable<Category>> GetAllAsync()
     {
         return await _categoryRespository.ListAsync();
+    }
+
+    public async Task<SaveCategoryResponse> GetByIdAsync(int id)
+    {
+        var category =  await _categoryRespository.FindByIdAsync(id);
+        if (category == null)
+            return new SaveCategoryResponse("Category not found.");
+        try {
+            return new SaveCategoryResponse(category);
+        } catch(Exception ex)
+        {
+            // Do some logging stuff
+            return new SaveCategoryResponse($"An error occurred when getting the category: {ex.Message}");
+        }
     }
 
     public async Task<SaveCategoryResponse> SaveAsync(Category category)
@@ -30,5 +63,27 @@ public class CategoryService(
             return new SaveCategoryResponse($"An error occurred when saving the category: {ex.Message}");
         }
 
+    }
+
+    public async Task<SaveCategoryResponse> UpdateAsync(int id, Category newCategory)
+    {
+        try {
+
+            var category = await _categoryRespository.FindByIdAsync(id);
+            if (category == null)
+                return new SaveCategoryResponse("Category not found.");
+
+            category.Name = newCategory.Name;
+
+            await _categoryRespository.UpdateAsync(category);
+            await _unitOfWork.CompleteAsync();
+
+            return new SaveCategoryResponse(category);
+
+        } catch(Exception ex)
+        {
+            // Do some logging stuff
+            return new SaveCategoryResponse($"An error occurred when updating the category: {ex.Message}");
+        }
     }
 }

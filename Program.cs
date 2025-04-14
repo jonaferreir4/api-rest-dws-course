@@ -17,6 +17,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Correção dos nomes das interfaces:
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // Swagger (opcional):
 builder.Services.AddEndpointsApiExplorer();

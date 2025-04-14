@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace api_rest.Extensions;

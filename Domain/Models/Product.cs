@@ -10,4 +10,7 @@ namespace api_rest.Domain.Models;
 
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
+
+        public int SupplierId { get; set; }  
+        public Supplier? Supplier { get; set; }
     }

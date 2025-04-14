@@ -1,8 +1,6 @@
 using api_rest.Domain.Models;
 using api_rest.Domain.Repositories;
-using api_rest.Mapping;
 using api_rest.Persistence.Context;
-using api_rest.Resource;
 using Microsoft.EntityFrameworkCore;
 
 namespace api_rest.Persistence.Repositories;
@@ -18,6 +16,11 @@ namespace api_rest.Persistence.Repositories;
         await _context.AddAsync(category);
     }
 
+    public async Task<Category?> FindByIdAsync(int id)
+    {
+        return await _context.Categories.FindAsync(id);
+    }
+
     public async Task<IEnumerable<Category>> ListAsync()
         {
             return await _context.Categories.ToListAsync();
@@ -25,11 +28,14 @@ namespace api_rest.Persistence.Repositories;
 
     public Task RemoveAsync(Category category)
     {
-        throw new NotImplementedException();
+        _context.Categories.Remove(category);
+        return Task.CompletedTask;
     }
 
-    public Task UpdateAsync(Category category)
+    public async Task UpdateAsync(Category category)
     {
-        throw new NotImplementedException();
+        _context.Categories.Update(category);
+        await _context.SaveChangesAsync();
+
     }
 }
