@@ -7,5 +7,5 @@ namespace api_rest.Domain.Repositories;
         Task<Supplier?> FindByIdAsync(int id);
         Task AddAsync(Supplier supplier);
         Task UpdateAsync(Supplier supplier);
-        Task RemoveAsync(Supplier supplier);
+        Task DeleteAsync(Supplier supplier);
     }

@@ -10,6 +10,6 @@ namespace api_rest.Domain.Repositories
         Task<Category?> FindByIdAsync(int id);
         // Task<Category> FindByNameAsync(string name);
         Task UpdateAsync(Category category);
-        Task RemoveAsync(Category category);
+        Task DeleteAsync(Category category);
     }
 }

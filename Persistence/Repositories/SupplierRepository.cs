@@ -27,7 +27,7 @@ public class SupplierRepository : BaseRepository, ISupplierRepository
         return await _context.Suppliers.FindAsync(id);
     }
 
-    public async Task RemoveAsync(Supplier supplier)
+    public async Task DeleteAsync(Supplier supplier)
     {
         _context.Remove(supplier);
         await Task.CompletedTask;

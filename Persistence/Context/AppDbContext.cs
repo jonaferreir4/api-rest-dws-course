@@ -1,3 +1,4 @@
+using api_rest.Domain.Helpers;
 using api_rest.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,12 @@ public class AppDbContext: DbContext
         builder.Entity<Product>().Property(p => p.Name).IsRequired().HasMaxLength(50);
         builder.Entity<Product>().Property(p => p.QuantityInPackage).IsRequired();
         builder.Entity<Product>().Property(p => p.UnitOfMeasurement).IsRequired();
+
+        builder.Entity<Product>().HasData
+        (
+            new Product { Id = 1, QuantityInPackage = 1, UnitOfMeasurement = EUnitOfMeasurement.Kilogram, Name = "Apple", CategoryId = 1, SupplierId = 1 },
+            new Product { Id = 2, QuantityInPackage = 1, UnitOfMeasurement = EUnitOfMeasurement.Liter, Name = "Milk", CategoryId = 2, SupplierId = 2 }
+        );
 
         builder.Entity<Supplier>().ToTable("Suppliers");
         builder.Entity<Supplier>().HasKey(s => s.Id);

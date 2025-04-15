@@ -19,7 +19,7 @@ public class SupplierService(
             return new SaveSupplierResponse("supplier not found.");
         try {
 
-            await _supplierRespository.RemoveAsync(supplier);
+            await _supplierRespository.DeleteAsync(supplier);
             await _unitOfWork.CompleteAsync();
 
             return new SaveSupplierResponse(supplier);
@@ -30,7 +30,7 @@ public class SupplierService(
         }
     }
 
-    public Task<IEnumerable<Supplier>> GetAllAsync()
+    public Task<IEnumerable<Supplier>> ListAsync()
     {
         return _supplierRespository.ListAsync();
     }

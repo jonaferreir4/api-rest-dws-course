@@ -19,7 +19,7 @@ public class CategoryService(
             return new SaveCategoryResponse("Category not found.");
         try {
 
-            await _categoryRespository.RemoveAsync(category);
+            await _categoryRespository.DeleteAsync(category);
             await _unitOfWork.CompleteAsync();
 
             return new SaveCategoryResponse(category);
@@ -30,7 +30,7 @@ public class CategoryService(
         }
     }
 
-    public async Task<IEnumerable<Category>> GetAllAsync()
+    public async Task<IEnumerable<Category>> ListAsync()
     {
         return await _categoryRespository.ListAsync();
     }

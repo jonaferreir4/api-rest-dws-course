@@ -3,6 +3,7 @@ using api_rest.Communication;
 using api_rest.Domain.Models;
 using api_rest.Domain.Repositories;
 using api_rest.Domain.Services;
+using api_rest.Persistence.Repositories;
 
 namespace api_rest.Services;
 public class ProductService(
@@ -29,9 +30,12 @@ public class ProductService(
     }
     
 
-    public Task<SaveProductResponse> GetByIdAsync(int id)
+    public async Task<SaveProductResponse> FindByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var product =  await _productRespository.FindByIdAsync(id);
+        if (product == null)
+            return new SaveProductResponse("Product not found");
+        return new SaveProductResponse(product);
     }
 
     public Task<IEnumerable<Product>> ListAsync()
@@ -39,14 +43,47 @@ public class ProductService(
         return _productRespository.ListAsync();
     }
 
-    public Task<SaveProductResponse> DeleteAsync(int id)
+    public async Task<SaveProductResponse> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var product =  await _productRespository.FindByIdAsync(id);
+        if (product == null)
+            return new SaveProductResponse("product not found.");
+        try {
+
+            await _productRespository.DeleteAsync(product);
+            await _unitOfWork.CompleteAsync();
+
+            return new SaveProductResponse(product);
+        } catch(Exception ex)
+        {
+            // Do some logging stuff
+            return new SaveProductResponse($"An error occurred when deleting the product: {ex.Message}");
+        }
     }
 
 
-    public Task<SaveProductResponse> UpdateAsync(int id, Product product)
+    public async Task<SaveProductResponse> UpdateAsync(int id, Product newProduct)
     {
-        throw new NotImplementedException();
+         try {
+
+            var product = await _productRespository.FindByIdAsync(id);
+            if (product == null)
+                return new SaveProductResponse("product not found.");
+
+            product.Name = newProduct.Name;
+            product.QuantityInPackage = newProduct.QuantityInPackage;
+            product.UnitOfMeasurement = newProduct.UnitOfMeasurement;
+
+            await _productRespository.UpdateAsync(product);
+            await _unitOfWork.CompleteAsync();
+
+            return new SaveProductResponse(product);
+
+        } catch(Exception ex)
+        {
+            // Do some logging stuff
+            return new SaveProductResponse($"An error occurred when updating the category: {ex.Message}");
+        }
     }
+
 }

@@ -26,7 +26,7 @@ namespace api_rest.Persistence.Repositories;
             return await _context.Categories.ToListAsync();
         }
 
-    public Task RemoveAsync(Category category)
+    public Task DeleteAsync(Category category)
     {
         _context.Categories.Remove(category);
         return Task.CompletedTask;

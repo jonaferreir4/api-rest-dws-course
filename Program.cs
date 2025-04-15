@@ -14,13 +14,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("supermarket-api-in-memory");
 });
 
-// Correção dos nomes das interfaces:
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-// Swagger (opcional):
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+// Swagger 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

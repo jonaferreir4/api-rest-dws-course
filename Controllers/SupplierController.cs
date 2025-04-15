@@ -13,14 +13,14 @@ namespace api_rest.Controllers;
         private readonly ISupplierService _supplierService = supplierService;
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> ListAsync()
         {   
-            var suppliers = await _supplierService.GetAllAsync();
+            var suppliers = await _supplierService.ListAsync();
             var resources = suppliers.Select(s => s.ToResource());
             return Ok(resources);
         }
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SaveSupplierResource resource)
+        public async Task<IActionResult> SaveAsync([FromBody] SaveSupplierResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
@@ -39,7 +39,7 @@ namespace api_rest.Controllers;
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveSupplierResource resource)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] SaveSupplierResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());

@@ -4,8 +4,8 @@ namespace api_rest.Domain.Repositories;
     public interface IProductRepository
     {
         Task<IEnumerable<Product>> ListAsync();
-        Task<Product> GetByIdAsync(int id);
+        Task<Product?> FindByIdAsync(int id);
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
-        Task DeleteAsync(int id);        
+        Task DeleteAsync(Product product);        
     }

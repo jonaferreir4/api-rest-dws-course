@@ -12,15 +12,15 @@ namespace api_rest.Controllers;
        private readonly ICategoryService _categoryService = categoryService;
 
       [HttpGet]
-       public async Task<IActionResult> GetAllAsync()
+       public async Task<IActionResult> ListAsync()
        {
-            var categories = await _categoryService.GetAllAsync();
+            var categories = await _categoryService.ListAsync();
             var resources = categories.Select(c => c.ToResource());
             return Ok(resources);
        }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SaveCategoryResource resource)
+        public async Task<IActionResult> SaveAsync([FromBody] SaveCategoryResource resource)
        {
                if (!ModelState.IsValid){
                        return BadRequest(ModelState.GetErrorMessages());
@@ -42,7 +42,7 @@ namespace api_rest.Controllers;
 
 
        [HttpPut("{id}")]
-       public async Task<IActionResult> PutAsync(int id, [FromBody] SaveCategoryResource resource)
+       public async Task<IActionResult> UpdateAsync(int id, [FromBody] SaveCategoryResource resource)
        {
                if (!ModelState.IsValid)
                    return BadRequest(ModelState.GetErrorMessages());
