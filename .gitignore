@@ -1,0 +1,75 @@
+## Compiled source #
+bin/
+obj/
+out/
+
+## NuGet Packages #
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+*.nuspec
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Visual Studio #
+.vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.cache
+*.dbmdl
+*.pidb
+*.log
+
+## ASP.NET Core #
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+.env
+.env.*
+
+## Logs #
+*.log
+logs/
+log/
+*.tlog
+
+## Entity Framework #
+*.db
+*.mdf
+*.ldf
+Migrations/
+
+## Publish results #
+publish/
+wwwroot/
+
+## Test results #
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.testsettings
+*.vsmdi
+
+## Others #
+*.tmp
+*.bak
+*.swp
+*.orig
+*.rej
+*.sdf
+_ReSharper*/
+.idea/
+*.sql
+
+## OS generated #
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
